@@ -60,6 +60,7 @@ The following options can be used:
 | `height` | 1024 | Viewport height of the browser in pixels |
 | `selector` | - | Take a screenshot of the element that matches this selector |
 | `thumb_width` | - | Width in pixels of the generated thumbnail, leave off for full-size screenshot |
+| `format` | png | Image format of the resulting screenshot image (`png` or `jpg`)|
 | `user_agent` | - | User-Agent string used to emulate a particular client. |
 | `cookie` | - | Set a cookie value before taking a screenshot. E.g. OptIn=true. Can be set multiple times to set more than one cookie. |
 | `delay` | - | Amount of time to wait in milliseconds before urlbox takes the screenshot |
