@@ -2,6 +2,27 @@
     "name": "urlbox/screenshots",
     "version": "1.0.0-rc",
     "description": "Use urlbox to easily generate website thumbnail screenshots from a URL",
+    "homepage": "https://github.com/urlbox-io/urlbox-screenshots-php",
+    "keywords": [
+        "convert",
+        "render",
+        "capture",
+        "webpage",
+        "image",
+        "screenshot",
+        "screenshots",
+        "urlbox",
+        "browser",
+        "headless",
+        "responsive",
+        "retina",
+        "phantomjs",
+        "laravel",
+        "thumbnail",
+        "website",
+        "preview",
+        "thumbnails"
+    ],
     "license": "MIT",
     "authors": [
         {

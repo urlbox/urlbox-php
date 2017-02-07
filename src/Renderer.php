@@ -33,7 +33,7 @@ final class Renderer
     return "https://api.urlbox.io/v1/$this->api_key/$TOKEN/$format?$query_string";
   }
 
-  private function sanitizeValue($val):string
+  private function sanitizeValue($val): string
   {
     $type = gettype($val);
     if($type == 'string'){return $this->encodeURIComponent($val);}
@@ -41,11 +41,8 @@ final class Renderer
 
   }
 
-  public static function encodeURIComponent(string $val): string
+  public function encodeURIComponent2(string $val): string
   {
-    if(gettype($val) != 'string'){
-      return $val;
-    }
     $result = rawurlencode($val);
     $result = str_replace('+', '%20', $result);
     $result = str_replace('%21', '!', $result);
@@ -54,6 +51,12 @@ final class Renderer
     $result = str_replace('%28', '(', $result);
     $result = str_replace('%29', ')', $result);
     return $result;
+  }
+
+  public function encodeURIComponent(string $val): string
+  {
+    $revert = array('%21'=>'!', '%2A'=>'*', '%27'=>"'", '%28'=>'(', '%29'=>')');
+    return strtr(rawurlencode($val), $revert);
   }
 
   private function ensureIsValidCredentials(string $api_key, string $api_secret): void
