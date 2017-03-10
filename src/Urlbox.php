@@ -1,7 +1,9 @@
 <?php
 declare(strict_types=1);
 
-final class Renderer
+namespace Urlbox\Screenshots;
+
+class Urlbox
 {
   private $api_key;
   private $api_secret;

@@ -58,4 +58,4 @@ config.json
 .htaccess
 tests/build
 build
-phpunit.xml
+#phpunit.xml

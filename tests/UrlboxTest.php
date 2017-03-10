@@ -2,29 +2,29 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-
+use Urlbox\Screenshots\Urlbox;
 /**
- * @covers Renderer
+ * @covers \Urlbox\Screenshots\Urlbox
  */
-final class RendererTest extends TestCase
+final class UrlboxTest extends TestCase
 {
     public function testCanBeCreatedFromCredentials()
     {
         $this->assertInstanceOf(
-            Renderer::class,
-            Renderer::fromCredentials('API_KEY', 'API_SECRET')
+            Urlbox::class,
+            Urlbox::fromCredentials('API_KEY', 'API_SECRET')
         );
     }
 
     public function testCannotBeCreatedFromInvalidCredentials()
     {
         $this->expectException(TypeError::class);
-        Renderer::fromCredentials('API_KEY');
+        Urlbox::fromCredentials('API_KEY');
     }
 
     public function testUrlEncoding()
     {
-        $urlbox = Renderer::fromCredentials('API_KEY','API_SECRET');
+        $urlbox = Urlbox::fromCredentials('API_KEY','API_SECRET');
         $this->assertEquals(
             "~!%40%23%24%25%5E%26*()%7B%7D%5B%5D%3D%3A%2F%2C%3B%3F%2B'%22%5C",
             $urlbox->encodeURIComponent('~!@#$%^&*(){}[]=:/,;?+\'"\\')
@@ -33,7 +33,7 @@ final class RendererTest extends TestCase
 
     public function testFormat()
     {
-        $urlbox = Renderer::fromCredentials('API_KEY','API_SECRET');
+        $urlbox = Urlbox::fromCredentials('API_KEY','API_SECRET');
         $options['format'] = 'jpg';
         $options['url'] = 'example.com';
         $this->assertEquals(
@@ -44,7 +44,7 @@ final class RendererTest extends TestCase
 
     public function testSimple()
     {
-        $urlbox = Renderer::fromCredentials('API_KEY','API_SECRET');
+        $urlbox = Urlbox::fromCredentials('API_KEY','API_SECRET');
         $options['url'] = 'example.com';
         $this->assertEquals(
           "https://api.urlbox.io/v1/API_KEY/b1b9b4362a5044ff18718d4d9a961044ed0cc815/png?url=example.com",
@@ -54,7 +54,7 @@ final class RendererTest extends TestCase
 
     public function testKitchenSink()
     {
-      $urlbox = Renderer::fromCredentials('API_KEY', 'API_SECRET');
+      $urlbox = Urlbox::fromCredentials('API_KEY', 'API_SECRET');
       $options['format'] = 'png';
       $options['url'] = 'https://app_staging.example.com/misc/template_preview.php?dsfdsfsdf&acc=79&cb=ba86b4c1&regions=%5B%7B%22id%22%3A%22dsfds%22%2C%22data%22%3A%7B%22html%22%3A%22It%20works!%22%7D%2C%22type%22%3A%22html%22%7D%5D&state=published&tid=7&sig=a642316f7e0ac9d783c30ef30a89bed3204252000319a2789851bc3de65ea216';
       $options['delay'] = 5000;

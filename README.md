@@ -1,18 +1,8 @@
 # Urlbox/Screenshots
 
-
 ## Capture highly accurate webpage screenshots of any site using Urlbox.io in PHP
 
-<!--[![Latest Version](https://img.shields.io/github/release/spatie/browsershot.svg?style=flat-square)](https://github.com/spatie/browsershot/releases)-->
-<!--[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)-->
-<!--[![Build Status](https://img.shields.io/travis/spatie/browsershot/master.svg?style=flat-square)](https://travis-ci.org/spatie/browsershot)-->
-<!--[![StyleCI](https://styleci.io/repos/19386515/shield?branch=master)](https://styleci.io/repos/19386515)-->
-<!--[![SensioLabsInsight](https://img.shields.io/sensiolabs/i/9c1184fb-1edb-41d5-9d30-2620d99447c7.svg?style=flat-square)](https://insight.sensiolabs.com/projects/9c1184fb-1edb-41d5-9d30-2620d99447c7)-->
-<!--[![Total Downloads](https://img.shields.io/packagist/dt/spatie/browsershot.svg?style=flat-square)](https://packagist.org/packages/spatie/browsershot)-->
-
-
 This package uses the [Urlbox.io](https://urlbox.io) screenshot as a service to generate website screenshots.
-
 
 ## Installation
 
@@ -22,7 +12,7 @@ This package can be installed through Composer.
 composer require urlbox/screenshots
 ```
 
-When using Laravel there is a service provider that you can make use of.
+When using Laravel there is a service provider that you can make use of:
 
 ```php
 
@@ -30,28 +20,59 @@ When using Laravel there is a service provider that you can make use of.
 
 'providers' => [
     '...',
-    'Urlbox\RendererProvider'
+    'Urlbox\Screenshots\UrlboxProvider'
 ];
+```
+
+setup your API keys:
+
+```php
+
+// config/services.php
+
+'urlbox' => [
+    'key'    => env('URLBOX_KEY'),
+    'secret' => env('URLBOX_SECRET')
+];
+```
+
+and in your .env file:
+
+```bash
+# URLBOX
+URLBOX_KEY=YOUR_URLBOX_KEY
+URLBOX_SECRET=YOUR_URLBOX_SECRET
 ```
 
 ## Usage
 
-You will need a [Urlbox](https://urlbox.io) account to use this package. Please signup [here](https://urlbox.io/pricing) and get your API Key and  Secret from the Urlbox dashboard once you have logged in.
+You will need a [Urlbox](https://urlbox.io) account to use this package. Please signup [here](https://urlbox.io/pricing) and get your API Key and Secret from the Urlbox dashboard once you have logged in.
 
 Here is a sample call to generate a Urlbox screenshot URL:
 
 ```php
-    $urlbox = \Urlbox\Renderer::fromCredentials('API_KEY', 'API_SECRET');
+    $urlbox = \Urlbox\Screenshots\Urlbox::fromCredentials('API_KEY', 'API_SECRET');
     $options['url'] = 'example.com';
     $urlboxUrl = $urlbox->generateUrl($options);
     // $urlboxUrl is now 'https://api.urlbox.io/v1/API_KEY/TOKEN/png?url=example.com'
+```
+
+If you're using Laravel and have setup the service provider, you can use the Facade provided:
+
+```php
+
+use Urlbox\Screenshots\Facades\Urlbox;
+
+$options["url"] = "example.com";
+$urlboxUrl = Urlbox::generateUrl($options);
+// $urlboxUrl is now 'https://api.urlbox.io/v1/API_KEY/TOKEN/png?url=example.com'
 ```
 
 You can now use the result (`$urlboxUrl`) by placing it inside an `<img/>` tag as the `src` parameter. 
 
 When you load the image, a screenshot of example.com will be returned.
 
-The following options can be used:
+The following options can be passed to the generateUrl method:
 
 | Option | Default | Description |
 | --- | --- | --- |
@@ -101,5 +122,3 @@ Urlbox is a premium Screenshot as a Service API. It lets you render highly accur
 ## License
 
 The MIT License (MIT).
-
-
