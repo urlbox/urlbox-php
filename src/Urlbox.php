@@ -24,10 +24,13 @@ class Urlbox
     $format = isset($options['format']) ? $options['format'] : 'png';
     unset($options['format']);
     $_parts = [];
-    foreach ($options as $key => $value) {
-      if(!empty($value)){
-        $encodedValue = $this->sanitizeValue($value);
-        $_parts[] = "$key=$encodedValue";
+    foreach ($options as $key => $values) {
+      $values = is_array($values) ? $values : [$values];
+      foreach ($values as $value) {
+        if(!empty($value)){
+          $encodedValue = $this->sanitizeValue($value);
+          $_parts[] = "$key=$encodedValue";
+        }
       }
     }
     $query_string = implode("&", $_parts);
