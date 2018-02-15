@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 namespace Urlbox\Screenshots;
 
@@ -8,18 +7,18 @@ class Urlbox
   private $api_key;
   private $api_secret;
   
-  public function __construct(string $api_key, string $api_secret)
+  public function __construct($api_key, $api_secret)
   {   
     $this->api_key = $api_key;
     $this->api_secret = $api_secret;
   }
 
-  public static function fromCredentials(string $api_key, string $api_secret): self
+  public static function fromCredentials($api_key, $api_secret)
   {
     return new self($api_key, $api_secret);
   }
 
-  public function generateUrl($options): string
+  public function generateUrl($options)
   {
     $format = isset($options['format']) ? $options['format'] : 'png';
     unset($options['format']);
@@ -35,7 +34,7 @@ class Urlbox
     return "https://api.urlbox.io/v1/$this->api_key/$TOKEN/$format?$query_string";
   }
 
-  private function sanitizeValue($val): string
+  private function sanitizeValue($val)
   {
     $type = gettype($val);
     if($type == 'string'){return $this->encodeURIComponent($val);}
@@ -43,7 +42,7 @@ class Urlbox
 
   }
 
-  public function encodeURIComponent2(string $val): string
+  public function encodeURIComponent2($val)
   {
     $result = rawurlencode($val);
     $result = str_replace('+', '%20', $result);
@@ -55,13 +54,13 @@ class Urlbox
     return $result;
   }
 
-  public function encodeURIComponent(string $val): string
+  public function encodeURIComponent($val)
   {
     $revert = array('%21'=>'!', '%2A'=>'*', '%27'=>"'", '%28'=>'(', '%29'=>')');
     return strtr(rawurlencode($val), $revert);
   }
 
-  private function ensureIsValidCredentials(string $api_key, string $api_secret): void
+  private function ensureIsValidCredentials($api_key, $api_secret)
   {
     if (!$api_key) {
       throw new InvalidArgumentException(
