@@ -1,6 +1,6 @@
 {
   "name": "urlbox/screenshots",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Use urlbox to easily generate website thumbnail screenshots from a URL",
   "homepage": "https://github.com/urlbox-io/urlbox-screenshots-php",
   "keywords": [
