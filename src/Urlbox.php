@@ -26,7 +26,7 @@ class Urlbox
     foreach ($options as $key => $values) {
       $values = is_array($values) ? $values : [$values];
       foreach ($values as $value) {
-        if(!empty($value)){
+        if(isset($value)){
           $encodedValue = $this->sanitizeValue($value);
           $_parts[] = "$key=$encodedValue";
         }
