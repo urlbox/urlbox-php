@@ -46,6 +46,7 @@ var/*
 logs/*
 composer.phar
 /vendor/
+.idea
 
 # Workflow files     #
 ######################
@@ -59,3 +60,4 @@ config.json
 tests/build
 build
 #phpunit.xml
+.phpunit.result.cache
