@@ -12,7 +12,7 @@ This package can be installed through Composer.
 composer require urlbox/screenshots
 ```
 
-When using Laravel there is a service provider that you can make use of:
+When using Laravel, if you are using a version older than v5.5 you will need to include the Service Provider manually:
 
 ```php
 // app/config/app.php
