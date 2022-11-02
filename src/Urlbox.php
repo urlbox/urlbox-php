@@ -4,11 +4,13 @@ namespace Urlbox\Screenshots;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\RequestOptions;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 
 class Urlbox
 {
+    private string $base_url = 'https://api.urlbox.io/v1';
     private string $api_key;
     private string $api_secret;
     private Client $client;
@@ -82,7 +84,7 @@ class Urlbox
         $query_string = implode( "&", $_parts );
         $token        = hash_hmac( "sha1", $query_string, $this->api_secret );
 
-        return "https://api.urlbox.io/v1/$this->api_key/$token/$format?$query_string";
+        return $this->base_url . '/' . $this->api_key . '/' . $token . '/' . $format . '?' . $query_string;
     }
 
     /**
@@ -153,6 +155,14 @@ class Urlbox
             );
         }
 
-        return $this->client->request( 'POST', $this->generateUrl( $options ) );
+        return $this->client->post(
+            $this->base_url . '/render',
+            [
+                RequestOptions::HEADERS => [
+                    'Authorization' => 'bearer ' . $this->api_secret,
+                ],
+                RequestOptions::JSON    => [ $options ]
+            ]
+        );
     }
 }

@@ -417,10 +417,10 @@ final class UrlboxTest extends TestCase
     {
         $responseMock = Mockery::mock( ResponseInterface::class );
         $guzzleMock   = Mockery::mock( Client::class )
-                               ->shouldReceive( 'request' )
+                               ->shouldReceive( 'post' )
                                ->with(
-                                   Mockery::capture( $method ),
                                    Mockery::capture( $url ),
+                                   Mockery::capture( $options ),
                                )
                                ->andReturn( $responseMock )
                                ->getMock();
@@ -433,10 +433,20 @@ final class UrlboxTest extends TestCase
             'webhook_url' => 'https://example.com/webhooks/urlbox',
         ] );
 
-        $this->assertEquals( 'POST', $method );
         $this->assertEquals(
-            'https://api.urlbox.io/v1/API_KEY/bc5c5758a03a18ce18cf74db904a7b9ca70b3cfb/png?url=https%3A%2F%2Fexample.com&webhook_url=https%3A%2F%2Fexample.com%2Fwebhooks%2Furlbox',
+            'https://api.urlbox.io/v1/render',
             $url
+        );
+        $this->assertEquals(
+            [
+                'headers' => [ 'Authorization' => 'bearer API_SECRET' ],
+                'json'    => [
+                    'url'         => 'https://example.com',
+                    'format'      => 'png',
+                    'webhook_url' => 'https://example.com/webhooks/urlbox',
+                ]
+            ],
+            $options
         );
         $this->assertEquals( $responseMock, $response );
     }
@@ -445,10 +455,10 @@ final class UrlboxTest extends TestCase
     {
         $exception  = Mockery::mock( ConnectException::class );
         $guzzleMock = Mockery::mock( Client::class )
-                             ->shouldReceive( 'request' )
+                             ->shouldReceive( 'post' )
                              ->with(
-                                 Mockery::capture( $method ),
                                  Mockery::capture( $url ),
+                                 Mockery::capture( $options ),
                              )
                              ->andThrow( $exception )
                              ->getMock();
@@ -466,10 +476,20 @@ final class UrlboxTest extends TestCase
             $this->fail( 'GuzzleException not thrown' );
 
         } catch ( GuzzleException $e ) {
-            $this->assertEquals( 'POST', $method );
             $this->assertEquals(
-                'https://api.urlbox.io/v1/API_KEY/bc5c5758a03a18ce18cf74db904a7b9ca70b3cfb/png?url=https%3A%2F%2Fexample.com&webhook_url=https%3A%2F%2Fexample.com%2Fwebhooks%2Furlbox',
+                'https://api.urlbox.io/v1/render',
                 $url
+            );
+            $this->assertEquals(
+                [
+                    'headers' => [ 'Authorization' => 'bearer API_SECRET' ],
+                    'json'    => [
+                        'url'         => 'https://example.com',
+                        'format'      => 'png',
+                        'webhook_url' => 'https://example.com/webhooks/urlbox',
+                    ]
+                ],
+                $options
             );
             $this->assertEquals( $exception, $e );
         }
