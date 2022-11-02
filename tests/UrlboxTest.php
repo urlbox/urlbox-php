@@ -439,7 +439,7 @@ final class UrlboxTest extends TestCase
         );
         $this->assertEquals(
             [
-                'headers' => [ 'Authorization' => 'bearer API_SECRET' ],
+                'headers' => [ 'Authorization' => 'Bearer API_SECRET' ],
                 'json'    => [
                     'url'         => 'https://example.com',
                     'format'      => 'png',
@@ -482,7 +482,7 @@ final class UrlboxTest extends TestCase
             );
             $this->assertEquals(
                 [
-                    'headers' => [ 'Authorization' => 'bearer API_SECRET' ],
+                    'headers' => [ 'Authorization' => 'Bearer API_SECRET' ],
                     'json'    => [
                         'url'         => 'https://example.com',
                         'format'      => 'png',
