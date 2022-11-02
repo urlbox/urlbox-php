@@ -159,7 +159,7 @@ class Urlbox
             $this->base_url . '/render',
             [
                 RequestOptions::HEADERS => [
-                    'Authorization' => 'bearer ' . $this->api_secret,
+                    'Authorization' => 'Bearer ' . $this->api_secret,
                 ],
                 RequestOptions::JSON    =>  $options
             ]
