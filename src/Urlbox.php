@@ -161,7 +161,7 @@ class Urlbox
                 RequestOptions::HEADERS => [
                     'Authorization' => 'bearer ' . $this->api_secret,
                 ],
-                RequestOptions::JSON    => [ $options ]
+                RequestOptions::JSON    =>  $options
             ]
         );
     }
