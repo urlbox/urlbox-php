@@ -2,78 +2,137 @@
 
 namespace Urlbox\Screenshots;
 
+use GuzzleHttp\Client;
+use InvalidArgumentException;
+use Psr\Http\Message\ResponseInterface;
+
 class Urlbox
 {
-  private $api_key;
-  private $api_secret;
-  
-  public function __construct($api_key, $api_secret)
-  {   
-    $this->api_key = $api_key;
-    $this->api_secret = $api_secret;
-  }
+    private string $api_key;
+    private string $api_secret;
+    private Client $client;
 
-  public static function fromCredentials($api_key, $api_secret)
-  {
-    return new self($api_key, $api_secret);
-  }
+    /**
+     * @param string $api_key
+     * @param string $api_secret
+     * @param Client $client
+     *
+     * @throws InvalidArgumentException
+     */
+    public function __construct( string $api_key, string $api_secret, Client $client )
+    {
+        $this->ensureIsValidCredentials( $api_key, $api_secret );
 
-  public function generateUrl($options)
-  {
-    $format = isset($options['format']) ? $options['format'] : 'png';
-    unset($options['format']);
-    $_parts = [];
-    foreach ($options as $key => $values) {
-      $values = is_array($values) ? $values : [$values];
-      foreach ($values as $value) {
-        if(isset($value)){
-          $encodedValue = $this->sanitizeValue($value);
-          $_parts[] = "$key=$encodedValue";
+        $this->api_key    = $api_key;
+        $this->api_secret = $api_secret;
+        $this->client     = $client;
+    }
+
+    /**
+     * @param string $api_key
+     * @param string $api_secret
+     *
+     * @return void
+     *
+     * @throws InvalidArgumentException
+     */
+    private function ensureIsValidCredentials( string $api_key, string $api_secret )
+    {
+        if ( empty( $api_key ) ) {
+            throw new InvalidArgumentException( 'requires an api key' );
         }
-      }
+
+        if ( empty( $api_secret ) ) {
+            throw new InvalidArgumentException( 'requires an api secret' );
+        }
     }
-    $query_string = implode("&", $_parts);
-    $TOKEN = hash_hmac("sha1", $query_string, $this->api_secret);
-    return "https://api.urlbox.io/v1/$this->api_key/$TOKEN/$format?$query_string";
-  }
 
-  private function sanitizeValue($val)
-  {
-    $type = gettype($val);
-    if($type == 'string'){return $this->encodeURIComponent($val);}
-    return var_export($val, true);
-
-  }
-
-  public function encodeURIComponent2($val)
-  {
-    $result = rawurlencode($val);
-    $result = str_replace('+', '%20', $result);
-    $result = str_replace('%21', '!', $result);
-    $result = str_replace('%2A', '*', $result);
-    $result = str_replace('%27', '\'', $result);
-    $result = str_replace('%28', '(', $result);
-    $result = str_replace('%29', ')', $result);
-    return $result;
-  }
-
-  public function encodeURIComponent($val)
-  {
-    $revert = array('%21'=>'!', '%2A'=>'*', '%27'=>"'", '%28'=>'(', '%29'=>')');
-    return strtr(rawurlencode($val), $revert);
-  }
-
-  private function ensureIsValidCredentials($api_key, $api_secret)
-  {
-    if (!$api_key) {
-      throw new InvalidArgumentException(
-        sprintf('requires an api key')
-      );
+    /**
+     * @param string $api_key
+     * @param string $api_secret
+     * @param Client $client
+     *
+     * @return Urlbox
+     */
+    public static function fromCredentials( string $api_key, string $api_secret, Client $client ): Urlbox
+    {
+        return new self( $api_key, $api_secret, $client );
     }
-    if (!$api_secret) {
-      throw new InvalidArgumentException(
-        sprintf('requires an api secret')
-      );
+
+    /**
+     * @param array $options
+     *
+     * @return string
+     */
+    public function generateUrl( array $options ): string
+    {
+        $format = $options['format'] ?? 'png';
+        unset( $options['format'] );
+        $_parts = [];
+        foreach ( $options as $key => $values ) {
+            $values = is_array( $values ) ? $values : [ $values ];
+            foreach ( $values as $value ) {
+                if ( isset( $value ) ) {
+                    $encodedValue = $this->sanitizeValue( $value );
+                    $_parts[]     = "$key=$encodedValue";
+                }
+            }
+        }
+        $query_string = implode( "&", $_parts );
+        $token        = hash_hmac( "sha1", $query_string, $this->api_secret );
+
+        return "https://api.urlbox.io/v1/$this->api_key/$token/$format?$query_string";
     }
-  }
+
+    /**
+     * @param mixed $value
+     *
+     * @return string|null
+     */
+    private function sanitizeValue( $value ): ?string
+    {
+        if ( is_string( $value ) ) {
+            return $this->encodeURIComponent( $value );
+        }
+
+        return var_export( $value, true );
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return string
+     */
+    private function encodeURIComponent( string $value ): string
+    {
+        $revert = array( '%21' => '!', '%2A' => '*', '%27' => "'", '%28' => '(', '%29' => ')' );
+
+        return strtr( rawurlencode( $value ), $revert );
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return ResponseInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function capture( array $options ): ResponseInterface
+    {
+        return $this->client->request( 'GET', $this->generateUrl( $options ) );
+    }
+
+    /**
+     * @param array $options
+     * @param string $filename filename including path
+     *
+     * @return bool
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function save( array $options, string $filename ): bool
+    {
+        $response = $this->capture( $options );
+        file_put_contents( $filename, (string) $response->getBody() );
+
+        return true;
+    }
 }

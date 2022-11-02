@@ -1,6 +1,6 @@
 {
   "name": "urlbox/screenshots",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "Use urlbox to easily generate website thumbnail screenshots from a URL",
   "homepage": "https://github.com/urlbox/urlbox-php",
   "keywords": [
@@ -33,9 +33,14 @@
       "role": "Developer"
     }
   ],
+  "require": {
+    "php": "^7.4|^8.0",
+    "guzzlehttp/guzzle": "^7.5.0"
+  },
   "require-dev": {
-    "phpunit/phpunit": "^9",
-    "phpunit/php-code-coverage": "^4.0"
+    "phpunit/phpunit": "^9.5.26",
+    "phpunit/php-code-coverage": "^9.2.18",
+    "mockery/mockery": "^1.5"
   },
   "autoload": {
     "psr-4": {
