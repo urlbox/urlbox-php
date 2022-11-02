@@ -3,7 +3,6 @@
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
-use PHPUnit\Framework\Error\Warning;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Urlbox\Screenshots\Urlbox;
@@ -359,9 +358,9 @@ final class UrlboxTest extends TestCase
                 'format' => 'png'
             ], '' );
 
-            $this->fail('Exception not thrown');
+            $this->fail( 'Exception not thrown' );
         } catch ( Throwable $e ) {
-            $this->assertInstanceOf(Error::class, $e);
+            $this->assertInstanceOf( Error::class, $e );
             $this->assertEquals( 'GET', $method );
             $this->assertEquals(
                 'https://api.urlbox.io/v1/API_KEY/5eaae418596fb183174660503df908a3966f4ba5/png?url=https%3A%2F%2Fexample.com',
@@ -397,6 +396,79 @@ final class UrlboxTest extends TestCase
             $this->assertEquals( 'GET', $method );
             $this->assertEquals(
                 'https://api.urlbox.io/v1/API_KEY/5eaae418596fb183174660503df908a3966f4ba5/png?url=https%3A%2F%2Fexample.com',
+                $url
+            );
+            $this->assertEquals( $exception, $e );
+        }
+    }
+
+    public function testWebhookThrowsExceptionWhenMissingWebhookUrlOption()
+    {
+        $this->expectException( InvalidArgumentException::class );
+
+        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', Mockery::mock( Client::class ) );
+
+        $urlbox->webhook( [
+            'url' => 'example.com'
+        ] );
+    }
+
+    public function testWebhookReturnsApiResponse()
+    {
+        $responseMock = Mockery::mock( ResponseInterface::class );
+        $guzzleMock   = Mockery::mock( Client::class )
+                               ->shouldReceive( 'request' )
+                               ->with(
+                                   Mockery::capture( $method ),
+                                   Mockery::capture( $url ),
+                               )
+                               ->andReturn( $responseMock )
+                               ->getMock();
+
+        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', $guzzleMock );
+
+        $response = $urlbox->webhook( [
+            'url'         => 'https://example.com',
+            'format'      => 'png',
+            'webhook_url' => 'https://example.com/webhooks/urlbox',
+        ] );
+
+        $this->assertEquals( 'POST', $method );
+        $this->assertEquals(
+            'https://api.urlbox.io/v1/API_KEY/bc5c5758a03a18ce18cf74db904a7b9ca70b3cfb/png?url=https%3A%2F%2Fexample.com&webhook_url=https%3A%2F%2Fexample.com%2Fwebhooks%2Furlbox',
+            $url
+        );
+        $this->assertEquals( $responseMock, $response );
+    }
+
+    public function testWebhookThrowsGuzzleException()
+    {
+        $exception  = Mockery::mock( ConnectException::class );
+        $guzzleMock = Mockery::mock( Client::class )
+                             ->shouldReceive( 'request' )
+                             ->with(
+                                 Mockery::capture( $method ),
+                                 Mockery::capture( $url ),
+                             )
+                             ->andThrow( $exception )
+                             ->getMock();
+
+        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', $guzzleMock );
+
+
+        try {
+            $response = $urlbox->webhook( [
+                'url'         => 'https://example.com',
+                'format'      => 'png',
+                'webhook_url' => 'https://example.com/webhooks/urlbox',
+            ] );
+
+            $this->fail( 'GuzzleException not thrown' );
+
+        } catch ( GuzzleException $e ) {
+            $this->assertEquals( 'POST', $method );
+            $this->assertEquals(
+                'https://api.urlbox.io/v1/API_KEY/bc5c5758a03a18ce18cf74db904a7b9ca70b3cfb/png?url=https%3A%2F%2Fexample.com&webhook_url=https%3A%2F%2Fexample.com%2Fwebhooks%2Furlbox',
                 $url
             );
             $this->assertEquals( $exception, $e );

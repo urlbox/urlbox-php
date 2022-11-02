@@ -3,6 +3,7 @@
 namespace Urlbox\Screenshots;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 
@@ -134,5 +135,24 @@ class Urlbox
         file_put_contents( $filename, (string) $response->getBody() );
 
         return true;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return ResponseInterface
+     *
+     * @throws GuzzleException
+     * @throws InvalidArgumentException
+     */
+    public function webhook( array $options ): ResponseInterface
+    {
+        if ( ! array_key_exists( 'webhook_url', $options ) ) {
+            throw new InvalidArgumentException(
+                'You must include "webhook_url" in the options - https://www.urlbox.io/docs/webhooks'
+            );
+        }
+
+        return $this->client->request( 'POST', $this->generateUrl( $options ) );
     }
 }
