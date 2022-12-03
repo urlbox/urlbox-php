@@ -16,14 +16,14 @@ final class UrlboxTest extends TestCase
     {
         $this->assertInstanceOf(
             Urlbox::class,
-            Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', Mockery::mock( Client::class ) )
+            Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', Mockery::mock( Client::class ) )
         );
     }
 
     public function testConstructorThrowsInvalidArgumentExceptionWhenApiKeyIsEmpty()
     {
         $this->expectException( InvalidArgumentException::class );
-        new Urlbox( '', 'API_SECRET', Mockery::mock( Client::class ) );
+        new Urlbox( '', 'API_SECRET', 'WEBHOOK_SECRET', Mockery::mock( Client::class ) );
     }
 
     public function testConstructorThrowsInvalidArgumentExceptionWhenApiSecretIsEmpty()
@@ -36,14 +36,14 @@ final class UrlboxTest extends TestCase
     {
         $this->assertInstanceOf(
             Urlbox::class,
-            Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', Mockery::mock( Client::class ) )
+            Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', Mockery::mock( Client::class ) )
         );
     }
 
     public function testFromCredentialsThrowsInvalidArgumentExceptionWhenApiKeyIsEmpty()
     {
         $this->expectException( InvalidArgumentException::class );
-        Urlbox::fromCredentials( '', 'API_SECRET', Mockery::mock( Client::class ) );
+        Urlbox::fromCredentials( '', 'API_SECRET', 'WEBHOOK_SECRET', Mockery::mock( Client::class ) );
     }
 
     public function testFromCredentialsThrowsInvalidArgumentExceptionWhenApiSecretIsEmpty()
@@ -54,7 +54,7 @@ final class UrlboxTest extends TestCase
 
     public function testGenerateUrlDefaultFormatToPng()
     {
-        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', Mockery::mock( Client::class ) );
+        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', Mockery::mock( Client::class ) );
         $this->assertEquals(
             'https://api.urlbox.io/v1/API_KEY/5eaae418596fb183174660503df908a3966f4ba5/png?url=https%3A%2F%2Fexample.com',
             $urlbox->generateUrl( [ 'url' => 'https://example.com' ] )
@@ -63,7 +63,7 @@ final class UrlboxTest extends TestCase
 
     public function testGenerateUrlCanSetFormatToPng()
     {
-        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', Mockery::mock( Client::class ) );
+        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', Mockery::mock( Client::class ) );
 
         $url = $urlbox->generateUrl( [
             'url'    => 'https://example.com',
@@ -78,7 +78,7 @@ final class UrlboxTest extends TestCase
 
     public function testGenerateUrlCanSetFormatToJpg()
     {
-        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', Mockery::mock( Client::class ) );
+        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', Mockery::mock( Client::class ) );
 
         $url = $urlbox->generateUrl( [
             'url'    => 'https://example.com',
@@ -93,7 +93,7 @@ final class UrlboxTest extends TestCase
 
     public function testGenerateUrlCanSetFormatToJpeg()
     {
-        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', Mockery::mock( Client::class ) );
+        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', Mockery::mock( Client::class ) );
 
         $url = $urlbox->generateUrl( [
             'url'    => 'https://example.com',
@@ -108,7 +108,7 @@ final class UrlboxTest extends TestCase
 
     public function testGenerateUrlCanSetFormatToAvif()
     {
-        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', Mockery::mock( Client::class ) );
+        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', Mockery::mock( Client::class ) );
 
         $url = $urlbox->generateUrl( [
             'url'    => 'https://example.com',
@@ -123,7 +123,7 @@ final class UrlboxTest extends TestCase
 
     public function testGenerateUrlCanSetFormatToWebp()
     {
-        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', Mockery::mock( Client::class ) );
+        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', Mockery::mock( Client::class ) );
 
         $url = $urlbox->generateUrl( [
             'url'    => 'https://example.com',
@@ -138,7 +138,7 @@ final class UrlboxTest extends TestCase
 
     public function testGenerateUrlCanSetFormatToPdf()
     {
-        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', Mockery::mock( Client::class ) );
+        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', Mockery::mock( Client::class ) );
 
         $url = $urlbox->generateUrl( [
             'url'    => 'https://example.com',
@@ -153,7 +153,7 @@ final class UrlboxTest extends TestCase
 
     public function testGenerateUrlCanSetFormatToSvg()
     {
-        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', Mockery::mock( Client::class ) );
+        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', Mockery::mock( Client::class ) );
 
         $url = $urlbox->generateUrl( [
             'url'    => 'https://example.com',
@@ -168,7 +168,7 @@ final class UrlboxTest extends TestCase
 
     public function testGenerateUrlCanSetFormatToHtml()
     {
-        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', Mockery::mock( Client::class ) );
+        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', Mockery::mock( Client::class ) );
 
         $url = $urlbox->generateUrl( [
             'url'    => 'https://example.com',
@@ -183,7 +183,7 @@ final class UrlboxTest extends TestCase
 
     public function testGenerateUrlEncodesOptionsCorrectly()
     {
-        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', Mockery::mock( Client::class ) );
+        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', Mockery::mock( Client::class ) );
 
         $url = $urlbox->generateUrl( [
             'url'       => 'https://example.com/~!@#$%^&*(){}[]=:/,;?+\'"\\',
@@ -199,7 +199,7 @@ final class UrlboxTest extends TestCase
 
     public function testGenerateUrlProducesCorrectUrlForTheKitchenSink()
     {
-        $urlbox  = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', Mockery::mock( Client::class ) );
+        $urlbox  = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', Mockery::mock( Client::class ) );
         $options = [
             'format'        => 'png',
             'url'           => 'https://app_staging.example.com/misc/template_preview.php?dsfdsfsdf&acc=79&cb=ba86b4c1&regions=%5B%7B%22id%22%3A%22dsfds%22%2C%22data%22%3A%7B%22html%22%3A%22It%20works!%22%7D%2C%22type%22%3A%22html%22%7D%5D&state=published&tid=7&sig=a642316f7e0ac9d783c30ef30a89bed3204252000319a2789851bc3de65ea216',
@@ -250,7 +250,7 @@ final class UrlboxTest extends TestCase
                                ->andReturn( $responseMock )
                                ->getMock();
 
-        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', $guzzleMock );
+        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', $guzzleMock );
 
         $response = $urlbox->capture( [
             'url'    => 'https://example.com',
@@ -277,7 +277,7 @@ final class UrlboxTest extends TestCase
                              ->andThrow( $exception )
                              ->getMock();
 
-        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', $guzzleMock );
+        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', $guzzleMock );
 
 
         try {
@@ -313,7 +313,7 @@ final class UrlboxTest extends TestCase
                                ->andReturn( $responseMock )
                                ->getMock();
 
-        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', $guzzleMock );
+        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', $guzzleMock );
 
         $filename = tempnam( '/tmp', 'URLBOX' );
 
@@ -350,7 +350,7 @@ final class UrlboxTest extends TestCase
                                ->andReturn( $responseMock )
                                ->getMock();
 
-        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', $guzzleMock );
+        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', $guzzleMock );
 
         try {
             $urlbox->save( [
@@ -381,7 +381,7 @@ final class UrlboxTest extends TestCase
                              ->andThrow( $exception )
                              ->getMock();
 
-        $urlbox   = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', $guzzleMock );
+        $urlbox   = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', $guzzleMock );
         $filename = tempnam( '/tmp', 'URLBOX' );
 
         try {
@@ -406,7 +406,7 @@ final class UrlboxTest extends TestCase
     {
         $this->expectException( InvalidArgumentException::class );
 
-        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', Mockery::mock( Client::class ) );
+        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', Mockery::mock( Client::class ) );
 
         $urlbox->webhook( [
             'url' => 'example.com'
@@ -425,7 +425,7 @@ final class UrlboxTest extends TestCase
                                ->andReturn( $responseMock )
                                ->getMock();
 
-        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', $guzzleMock );
+        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', $guzzleMock );
 
         $response = $urlbox->webhook( [
             'url'         => 'https://example.com',
@@ -463,7 +463,7 @@ final class UrlboxTest extends TestCase
                              ->andThrow( $exception )
                              ->getMock();
 
-        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', $guzzleMock );
+        $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', $guzzleMock );
 
 
         try {
@@ -493,6 +493,66 @@ final class UrlboxTest extends TestCase
             );
             $this->assertEquals( $exception, $e );
         }
+    }
+
+    public function testVerifyWebhookSignatureThrowsExceptionWhenWebhookSecretNotSet()
+    {
+        try {
+            $urlbox = new Urlbox( 'API_KEY', 'API_SECRET' );
+            $urlbox->verifyWebhookSignature( 't=1,sha256=foobar', '' );
+
+            $this->fail( 'Expected Exception not thrown' );
+        } catch ( Exception $exception ) {
+            $this->assertEquals(
+                'Unable to verify signature as Webhook Secret is not set. You can find your webhook secret inside your project\'s settings - https://www.urlbox.io/dashboard/projects',
+                $exception->getMessage()
+            );
+        }
+    }
+
+    public function testVerifyWebhookSignatureThrowsExceptionWhenHeaderIsEmpty()
+    {
+        try {
+            $urlbox = new Urlbox( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET' );
+            $urlbox->verifyWebhookSignature( '', '' );
+
+            $this->fail( 'Expected Exception not thrown' );
+        } catch ( InvalidArgumentException $exception ) {
+            $this->assertEquals(
+                'Unable to verify signature as header is empty. Please ensure you pass the `x-urlbox-signature` from the header of the webhook response',
+                $exception->getMessage()
+            );
+        }
+    }
+
+    public function testVerifyWebhookSignatureReturnsTrueWhenSignatureMatches()
+    {
+        $content = '{"event": "render.succeeded","renderId": "19a59ab6-a5aa-4cde-86cb-d2b23302fd84","result": {"renderUrl": "https://renders.urlbox.io/urlbox1/renders/6215a3df94d7588f7d910513/2022/7/6/19a59ab6-a5aa-4cde-86cb-d2b23302fd84.png","size": 34097},"meta": {"startTime": "2022-07-06T17:49:18.593Z","endTime": "2022-07-06T17:49:21.103Z"}}';
+        $header  = 't=1657129761,sha256=ddbceae3998704c0b264d8e8c1d486df9f1c0b6cdb77e6e13ce7de4a72fbd81d';
+
+        $urlbox  = new Urlbox( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET' );
+
+        $this->assertTrue( $urlbox->verifyWebhookSignature( $header, $content ) );
+    }
+
+    public function testVerifyWebhookSignatureReturnsFalseWhenSignatureDoNotMatch()
+    {
+        $content = '{"event": "render.succeeded","renderId": "19a59ab6-a5aa-4cde-86cb-d2b23302fd84","result": {"renderUrl": "https://renders.urlbox.io/urlbox1/renders/6215a3df94d7588f7d910513/2022/7/6/19a59ab6-a5aa-4cde-86cb-d2b23302fd84.png","size": 34097},"meta": {"startTime": "2022-07-06T17:49:18.593Z","endTime": "2022-07-06T17:49:21.103Z"}}';
+        $header  = 't=1657129761,sha256=foobare3998704c0b264d8e8c1d4foobar1c0b6cdb77e6e13ce7de4a72foobar';
+
+        $urlbox  = new Urlbox( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET' );
+
+        $this->assertFalse( $urlbox->verifyWebhookSignature( $header, $content ) );
+    }
+
+    public function testVerifyWebhookSignatureReturnsFalseWhenWebhookSecretIncorrect()
+    {
+        $content = '{"event": "render.succeeded","renderId": "19a59ab6-a5aa-4cde-86cb-d2b23302fd84","result": {"renderUrl": "https://renders.urlbox.io/urlbox1/renders/6215a3df94d7588f7d910513/2022/7/6/19a59ab6-a5aa-4cde-86cb-d2b23302fd84.png","size": 34097},"meta": {"startTime": "2022-07-06T17:49:18.593Z","endTime": "2022-07-06T17:49:21.103Z"}}';
+        $header  = 't=1657129761,sha256=ddbceae3998704c0b264d8e8c1d486df9f1c0b6cdb77e6e13ce7de4a72fbd81d';
+
+        $urlbox  = new Urlbox( 'API_KEY', 'API_SECRET', 'INCORRECT_WEBHOOK_SECRET' );
+
+        $this->assertFalse( $urlbox->verifyWebhookSignature( $header, $content ) );
     }
 }
 
