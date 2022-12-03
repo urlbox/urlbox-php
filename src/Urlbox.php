@@ -191,12 +191,22 @@ class Urlbox
         return $generated_hash === $request_hash;
     }
 
-    private function getTimestamp( $header )
+    /**
+     * @param string $header
+     *
+     * @return string
+     */
+    private function getTimestamp( string $header ): string
     {
         return array_reverse( explode( 't=', explode( ',', $header )[0], 2 ) )[0];
     }
 
-    private function getSignature( $header ): string
+    /**
+     * @param string $header
+     *
+     * @return string
+     */
+    private function getSignature( string $header ): string
     {
         return array_reverse( explode( 'sha256=', $header, 2 ) )[0];
     }
