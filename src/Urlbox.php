@@ -2,6 +2,7 @@
 
 namespace Urlbox\Screenshots;
 
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
@@ -13,22 +14,26 @@ class Urlbox
     private string $base_url = 'https://api.urlbox.io/v1';
     private string $api_key;
     private string $api_secret;
+    private ?string $webhook_secret;
     private Client $client;
 
     /**
      * @param string $api_key
      * @param string $api_secret
-     * @param Client $client
+     * @param string|null $webhook_secret
+     * @param Client|null $client
      *
      * @throws InvalidArgumentException
      */
-    public function __construct( string $api_key, string $api_secret, Client $client )
+    public function __construct( string $api_key, string $api_secret, ?string $webhook_secret = null, ?Client $client = null )
     {
         $this->ensureIsValidCredentials( $api_key, $api_secret );
 
-        $this->api_key    = $api_key;
-        $this->api_secret = $api_secret;
-        $this->client     = $client;
+        $this->api_key        = $api_key;
+        $this->api_secret     = $api_secret;
+        $this->webhook_secret = $webhook_secret;
+
+        $this->client = $client ?? new Client();
     }
 
     /**
@@ -42,24 +47,25 @@ class Urlbox
     private function ensureIsValidCredentials( string $api_key, string $api_secret )
     {
         if ( empty( $api_key ) ) {
-            throw new InvalidArgumentException( 'requires an api key' );
+            throw new InvalidArgumentException( 'Requires an api key - https://www.urlbox.io/dashboard/projects' );
         }
 
         if ( empty( $api_secret ) ) {
-            throw new InvalidArgumentException( 'requires an api secret' );
+            throw new InvalidArgumentException( 'Requires an api secret - https://www.urlbox.io/dashboard/projects' );
         }
     }
 
     /**
      * @param string $api_key
      * @param string $api_secret
-     * @param Client $client
+     * @param string|null $webhook_secret
+     * @param Client|null $client
      *
      * @return Urlbox
      */
-    public static function fromCredentials( string $api_key, string $api_secret, Client $client ): Urlbox
+    public static function fromCredentials( string $api_key, string $api_secret, ?string $webhook_secret, ?Client $client = null ): Urlbox
     {
-        return new self( $api_key, $api_secret, $client );
+        return new self( $api_key, $api_secret, $webhook_secret, $client );
     }
 
     /**
@@ -161,8 +167,37 @@ class Urlbox
                 RequestOptions::HEADERS => [
                     'Authorization' => 'Bearer ' . $this->api_secret,
                 ],
-                RequestOptions::JSON    =>  $options
+                RequestOptions::JSON    => $options
             ]
         );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function verifyWebhookSignature( string $header, string $content ): bool
+    {
+        if ( empty( $this->webhook_secret ) ) {
+            throw new Exception( 'Unable to verify signature as Webhook Secret is not set. You can find your webhook secret inside your project\'s settings - https://www.urlbox.io/dashboard/projects' );
+        }
+
+        if ( empty( $header ) ) {
+            throw new InvalidArgumentException( 'Unable to verify signature as header is empty. Please ensure you pass the `x-urlbox-signature` from the header of the webhook response' );
+        }
+
+        $generated_hash = hash_hmac( 'sha256', $this->getTimestamp( $header ) . '.' . $content, $this->webhook_secret );
+        $request_hash   = $this->getSignature( $header );
+
+        return $generated_hash === $request_hash;
+    }
+
+    private function getTimestamp( $header )
+    {
+        return array_reverse( explode( 't=', explode( ',', $header )[0], 2 ) )[0];
+    }
+
+    private function getSignature( $header ): string
+    {
+        return array_reverse( explode( 'sha256=', $header, 2 ) )[0];
     }
 }
