@@ -12,25 +12,29 @@ This package can be installed through Composer.
 composer require urlbox/screenshots
 ```
 
+
+### Laravel Setup
+
 When using Laravel, if you are using a version pre v5.5 you will need to include the Service Provider manually:
 
 ```php
 // app/config/app.php
 
 'providers' => [
-    '...',
+    // ...
     'Urlbox\Screenshots\UrlboxProvider'
 ];
 ```
 
-setup your API keys:
+Setup your API keys:
 
 ```php
 // config/services.php
 
 'urlbox' => [
     'key'    => env('URLBOX_KEY'),
-    'secret' => env('URLBOX_SECRET')
+    'secret' => env('URLBOX_SECRET'),
+    'webhook_secret' => env('URLBOX_WEBHOOK_SECRET'),
 ];
 ```
 
@@ -40,7 +44,10 @@ and in your .env file:
 # URLBOX
 URLBOX_KEY=YOUR_URLBOX_KEY
 URLBOX_SECRET=YOUR_URLBOX_SECRET
+URLBOX_WEBHOOK_SECRET=YOUR_URLBOX_WEBHOOK_SECRET
 ```
+
+You can find your API Credentials and Webhook Secret [here](https://www.urlbox.io/dashboard/projects)
 
 ## Usage
 
