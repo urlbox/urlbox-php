@@ -62,5 +62,10 @@
             "Urlbox": "Urlbox\\Screenshots\\Facade\\Urlbox"
         }
     }
+  },
+  "config": {
+    "allow-plugins": {
+      "symfony/flex": true
+    }
   }
 }
