@@ -125,45 +125,7 @@ You can find the full list of available options within the [docs](https://urlbox
 | `use_s3`        | false             | Save the screenshot directly to the S3 bucket configured on your account                                                                                                                                                                                                                                                          |
 | `webhook_url`   | -                 | Urlbox will send a POST request back to the supplied URL with data about the screenshot in JSON format once it has completed rendering.                                                                                                                                                                                           |
 
-## Available Methods
-
-#### `__construct( string $api_key, string $api_secret, ?string $webhook_secret = null, ?\GuzzleHttp\Client $client = null )`
-Returns `\Urlbox\Screenshots\Urlbox`
-
-Throws `\InvalidArgumentException`
-
-Example: `$urlbox = new \Urlbox\Screenshots\Urlbox('key', 'secret', 'webhook', new \GuzzleHttp\Client());`
-
----
-
-### __construct
-
-```php
-public function __construct( string $api_key, string $api_secret, ?string $webhook_secret = null, ?\GuzzleHttp\Client $client = null ): \Urlbox\Screenshots\Urlbox
-```
-
-**Parameters:**
-
-| Parameter        | Type                             | Description    |
-|------------------|----------------------------------|----------------|
-| `$apiKey`        | **string**                       | Api Key        |
-| `$apiSecret`     | **string**                       | Api Secret     |
-| `$webhookSecret` | **string&#124;null**             | Webhook Secret |
-| `$client`        | **\GuzzleHttp\Client&#124;null** | Guzzle Client  |
-
-**Returns:** `\Urlbox\Screenshots\Urlbox`
-
-**Throws:** `\InvalidArgumentException`
-
-**Example:**
-
-```php
-$urlbox = new \Urlbox\Screenshots\Urlbox('key', 'secret', 'webhook', new \GuzzleHttp\Client());
-```
-
 ***
-
-
 
 ## Other implementations
 
