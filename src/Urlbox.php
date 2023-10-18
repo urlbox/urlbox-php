@@ -63,7 +63,7 @@ class Urlbox
      * @return Urlbox
      * @throws InvalidArgumentException
      */
-    public static function fromCredentials( string $apiKey, string $apiSecret, ?string $webhookSecret, ?Client $client = null ): Urlbox
+    public static function fromCredentials( string $apiKey, string $apiSecret, ?string $webhookSecret = null, ?Client $client = null ): Urlbox
     {
         return new self( $apiKey, $apiSecret, $webhookSecret, $client );
     }
