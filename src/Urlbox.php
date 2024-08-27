@@ -10,7 +10,7 @@ use InvalidArgumentException;
 
 class Urlbox
 {
-    private string $baseUrl = 'https://api.urlbox.io/v1';
+    private string $baseUrl = 'https://api.urlbox.com/v1';
     private string $apiKey;
     private string $apiSecret;
     private ?string $webhookSecret;
@@ -46,11 +46,11 @@ class Urlbox
     private function ensureIsValidCredentials( string $apiKey, string $apiSecret )
     {
         if ( empty( $apiKey ) ) {
-            throw new InvalidArgumentException( 'Requires an api key - https://www.urlbox.io/dashboard/projects' );
+            throw new InvalidArgumentException( 'Requires an api key - https://www.urlbox.com/dashboard/projects' );
         }
 
         if ( empty( $apiSecret ) ) {
-            throw new InvalidArgumentException( 'Requires an api secret - https://www.urlbox.io/dashboard/projects' );
+            throw new InvalidArgumentException( 'Requires an api secret - https://www.urlbox.com/dashboard/projects' );
         }
     }
 
@@ -210,7 +210,7 @@ class Urlbox
     public function verifyWebhookSignature( string $header, string $content ): bool
     {
         if ( empty( $this->webhookSecret ) ) {
-            throw new Exception( 'Unable to verify signature as Webhook Secret is not set. You can find your webhook secret inside your project\'s settings - https://www.urlbox.io/dashboard/projects' );
+            throw new Exception( 'Unable to verify signature as Webhook Secret is not set. You can find your webhook secret inside your project\'s settings - https://www.urlbox.com/dashboard/projects' );
         }
 
         if ( empty( $header ) ) {
