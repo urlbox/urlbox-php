@@ -130,6 +130,8 @@ You can find the full list of available options within the [docs](https://urlbox
 ## Other implementations
 
 * [Node.js](https://github.com/urlbox-io/urlbox-screenshots-node)
+* [Ruby](https://github.com/urlbox/urlbox-ruby)
+* [Python](https://github.com/urlbox/urlbox-python)
 
 ## Contributing
 
