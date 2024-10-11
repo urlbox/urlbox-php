@@ -10,7 +10,7 @@ use InvalidArgumentException;
 
 class Urlbox
 {
-    private string $baseUrl = 'https://api.urlbox.io/v1';
+    private string $baseUrl = 'https://api.urlbox.com/v1';
     private string $apiKey;
     private string $apiSecret;
     private ?string $webhookSecret;
@@ -36,6 +36,8 @@ class Urlbox
     }
 
     /**
+     * Ensure the user has passed an API key and secret.
+     *
      * @param string $apiKey
      * @param string $apiSecret
      *
@@ -46,15 +48,17 @@ class Urlbox
     private function ensureIsValidCredentials( string $apiKey, string $apiSecret )
     {
         if ( empty( $apiKey ) ) {
-            throw new InvalidArgumentException( 'Requires an api key - https://www.urlbox.io/dashboard/projects' );
+            throw new InvalidArgumentException( 'Requires an api key - https://www.urlbox.com/dashboard/projects' );
         }
 
         if ( empty( $apiSecret ) ) {
-            throw new InvalidArgumentException( 'Requires an api secret - https://www.urlbox.io/dashboard/projects' );
+            throw new InvalidArgumentException( 'Requires an api secret - https://www.urlbox.com/dashboard/projects' );
         }
     }
 
     /**
+     * Returns a new instance of Urlbox
+     *
      * @param string $apiKey
      * @param string $apiSecret
      * @param string|null $webhookSecret
@@ -69,8 +73,9 @@ class Urlbox
     }
 
     /**
+     * Calls the Urlbox /sync endpoint
      * @param array $options
-     * @param string|null $saveToDiskPath
+     * @param string|null $saveToDiskPath - A path to save the image to
      *
      * @return array{renderUrl: string, size: int, localPath: string}
      * @throws GuzzleException
@@ -89,8 +94,9 @@ class Urlbox
     }
 
     /**
-     * @param string $endpoint
-     * @param array $options
+     * Make a POST request to Urlbox
+     * @param string $endpoint - The endpoint EG /sync
+     * @param array $options - The render options
      *
      * @return array{renderUrl: string, size: int}
      * @throws GuzzleException
@@ -201,6 +207,7 @@ class Urlbox
     }
 
     /**
+     * Verifies the signature of an incoming webhook request to ensure its authenticity.
      * @param string $header
      * @param string $content
      *
@@ -210,7 +217,7 @@ class Urlbox
     public function verifyWebhookSignature( string $header, string $content ): bool
     {
         if ( empty( $this->webhookSecret ) ) {
-            throw new Exception( 'Unable to verify signature as Webhook Secret is not set. You can find your webhook secret inside your project\'s settings - https://www.urlbox.io/dashboard/projects' );
+            throw new Exception( 'Unable to verify signature as Webhook Secret is not set. You can find your webhook secret inside your project\'s settings - https://www.urlbox.com/dashboard/projects' );
         }
 
         if ( empty( $header ) ) {

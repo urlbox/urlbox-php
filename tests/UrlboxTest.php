@@ -69,7 +69,7 @@ final class UrlboxTest extends TestCase
             [ 'renderUrl' => 'http://storage.foobar.com/urlbox/renders/123456.png', 'size' => 525949 ],
             $response
         );
-        $this->assertEquals( 'https://api.urlbox.io/v1/render/sync', $url );
+        $this->assertEquals( 'https://api.urlbox.com/v1/render/sync', $url );
         $this->assertEquals( [
             'headers' => [
                 'Authorization' => 'Bearer API_SECRET',
@@ -123,7 +123,7 @@ final class UrlboxTest extends TestCase
             $result
         );
 
-        $this->assertEquals( 'https://api.urlbox.io/v1/render/sync', $postUrl );
+        $this->assertEquals( 'https://api.urlbox.com/v1/render/sync', $postUrl );
         $this->assertEquals( [
             'headers' => [
                 'Authorization' => 'Bearer API_SECRET',
@@ -146,7 +146,7 @@ final class UrlboxTest extends TestCase
         $guzzleMock = Mockery::mock( Client::class )
                              ->shouldReceive( 'post' )
                              ->with( Mockery::capture( $url ), Mockery::capture( $requestOptions ) )
-                             ->andReturn( $this->getMockedGuzzleResponse( '{"status":"created","renderId":"00000000-0000-0000-0000-000000000000","statusUrl":"https://api.urlbox.io/render/00000000-0000-0000-0000-000000000000"}' ) )
+                             ->andReturn( $this->getMockedGuzzleResponse( '{"status":"created","renderId":"00000000-0000-0000-0000-000000000000","statusUrl":"https://api.urlbox.com/render/00000000-0000-0000-0000-000000000000"}' ) )
                              ->getMock();
 
         $urlbox = new Urlbox( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', $guzzleMock );
@@ -160,11 +160,11 @@ final class UrlboxTest extends TestCase
             [
                 'status'    => 'created',
                 'renderId'  => '00000000-0000-0000-0000-000000000000',
-                'statusUrl' => 'https://api.urlbox.io/render/00000000-0000-0000-0000-000000000000'
+                'statusUrl' => 'https://api.urlbox.com/render/00000000-0000-0000-0000-000000000000'
             ],
             $response
         );
-        $this->assertEquals( 'https://api.urlbox.io/v1/render', $url );
+        $this->assertEquals( 'https://api.urlbox.com/v1/render', $url );
         $this->assertEquals( [
             'headers' => [
                 'Authorization' => 'Bearer API_SECRET',
@@ -180,7 +180,7 @@ final class UrlboxTest extends TestCase
     {
         $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', Mockery::mock( Client::class ) );
         $this->assertEquals(
-            'https://api.urlbox.io/v1/API_KEY/5eaae418596fb183174660503df908a3966f4ba5/png?url=https%3A%2F%2Fexample.com',
+            'https://api.urlbox.com/v1/API_KEY/5eaae418596fb183174660503df908a3966f4ba5/png?url=https%3A%2F%2Fexample.com',
             $urlbox->generateSignedUrl( [ 'url' => 'https://example.com' ] )
         );
     }
@@ -195,7 +195,7 @@ final class UrlboxTest extends TestCase
         ] );
 
         $this->assertEquals(
-            'https://api.urlbox.io/v1/API_KEY/5eaae418596fb183174660503df908a3966f4ba5/png?url=https%3A%2F%2Fexample.com',
+            'https://api.urlbox.com/v1/API_KEY/5eaae418596fb183174660503df908a3966f4ba5/png?url=https%3A%2F%2Fexample.com',
             $url
         );
     }
@@ -210,7 +210,7 @@ final class UrlboxTest extends TestCase
         ] );
 
         $this->assertEquals(
-            'https://api.urlbox.io/v1/API_KEY/5eaae418596fb183174660503df908a3966f4ba5/jpg?url=https%3A%2F%2Fexample.com',
+            'https://api.urlbox.com/v1/API_KEY/5eaae418596fb183174660503df908a3966f4ba5/jpg?url=https%3A%2F%2Fexample.com',
             $url
         );
     }
@@ -225,7 +225,7 @@ final class UrlboxTest extends TestCase
         ] );
 
         $this->assertEquals(
-            'https://api.urlbox.io/v1/API_KEY/5eaae418596fb183174660503df908a3966f4ba5/jpeg?url=https%3A%2F%2Fexample.com',
+            'https://api.urlbox.com/v1/API_KEY/5eaae418596fb183174660503df908a3966f4ba5/jpeg?url=https%3A%2F%2Fexample.com',
             $url
         );
     }
@@ -240,7 +240,7 @@ final class UrlboxTest extends TestCase
         ] );
 
         $this->assertEquals(
-            'https://api.urlbox.io/v1/API_KEY/5eaae418596fb183174660503df908a3966f4ba5/avif?url=https%3A%2F%2Fexample.com',
+            'https://api.urlbox.com/v1/API_KEY/5eaae418596fb183174660503df908a3966f4ba5/avif?url=https%3A%2F%2Fexample.com',
             $url
         );
     }
@@ -255,7 +255,7 @@ final class UrlboxTest extends TestCase
         ] );
 
         $this->assertEquals(
-            'https://api.urlbox.io/v1/API_KEY/5eaae418596fb183174660503df908a3966f4ba5/webp?url=https%3A%2F%2Fexample.com',
+            'https://api.urlbox.com/v1/API_KEY/5eaae418596fb183174660503df908a3966f4ba5/webp?url=https%3A%2F%2Fexample.com',
             $url
         );
     }
@@ -270,7 +270,7 @@ final class UrlboxTest extends TestCase
         ] );
 
         $this->assertEquals(
-            'https://api.urlbox.io/v1/API_KEY/5eaae418596fb183174660503df908a3966f4ba5/pdf?url=https%3A%2F%2Fexample.com',
+            'https://api.urlbox.com/v1/API_KEY/5eaae418596fb183174660503df908a3966f4ba5/pdf?url=https%3A%2F%2Fexample.com',
             $url
         );
     }
@@ -285,7 +285,7 @@ final class UrlboxTest extends TestCase
         ] );
 
         $this->assertEquals(
-            'https://api.urlbox.io/v1/API_KEY/5eaae418596fb183174660503df908a3966f4ba5/svg?url=https%3A%2F%2Fexample.com',
+            'https://api.urlbox.com/v1/API_KEY/5eaae418596fb183174660503df908a3966f4ba5/svg?url=https%3A%2F%2Fexample.com',
             $url
         );
     }
@@ -300,7 +300,7 @@ final class UrlboxTest extends TestCase
         ] );
 
         $this->assertEquals(
-            'https://api.urlbox.io/v1/API_KEY/5eaae418596fb183174660503df908a3966f4ba5/html?url=https%3A%2F%2Fexample.com',
+            'https://api.urlbox.com/v1/API_KEY/5eaae418596fb183174660503df908a3966f4ba5/html?url=https%3A%2F%2Fexample.com',
             $url
         );
     }
@@ -316,7 +316,7 @@ final class UrlboxTest extends TestCase
         ] );
 
         $this->assertEquals(
-            "https://api.urlbox.io/v1/API_KEY/897c2361c52a5eb41b9128a2b7e70ffd5fefd662/png?url=https%3A%2F%2Fexample.com%2F~!%40%23%24%25%5E%26*()%7B%7D%5B%5D%3D%3A%2F%2C%3B%3F%2B'%22%5C&block_ads=true",
+            "https://api.urlbox.com/v1/API_KEY/897c2361c52a5eb41b9128a2b7e70ffd5fefd662/png?url=https%3A%2F%2Fexample.com%2F~!%40%23%24%25%5E%26*()%7B%7D%5B%5D%3D%3A%2F%2C%3B%3F%2B'%22%5C&block_ads=true",
             $url
         );
     }
@@ -357,7 +357,7 @@ final class UrlboxTest extends TestCase
         $url = $urlbox->generateSignedUrl( $options );
 
         $this->assertEquals(
-            "https://api.urlbox.io/v1/API_KEY/5280bc0f0fa198eb6fcde9fd3f32280dec496ee3/png?url=https%3A%2F%2Fapp_staging.example.com%2Fmisc%2Ftemplate_preview.php%3Fdsfdsfsdf%26acc%3D79%26cb%3Dba86b4c1%26regions%3D%255B%257B%2522id%2522%253A%2522dsfds%2522%252C%2522data%2522%253A%257B%2522html%2522%253A%2522It%2520works!%2522%257D%252C%2522type%2522%253A%2522html%2522%257D%255D%26state%3Dpublished%26tid%3D7%26sig%3Da642316f7e0ac9d783c30ef30a89bed3204252000319a2789851bc3de65ea216&delay=5000&selector=%23trynow&full_page=true&width=1280&height=1024&cookie=ckplns%3D1&cookie=foo%3Dbar&user_agent=Mozilla%2F5.0%20(iPhone%3B%20CPU%20iPhone%20OS%2010_0%20like%20Mac%20OS%20X)%20AppleWebKit%2F602.1.32%20(KHTML%2C%20like%20Gecko)%20Version%2F10.0%20Mobile%2F14A5261v%20Safari%2F602.1&retina=true&thumb_width=400&crop_width=500&ttl=604800&force=true&headless=false&wait_for=.someel&click=%23tab-specs-trigger&hover=a%5Bhref%3D%22https%3A%2F%2Fgoogle.com%22%5D&bg_color=%23bbbddd&highlight=trump%7Cinauguration&highlightbg=%2311cc77&highlightfg=green&hide_selector=.modal-backdrop%2C%20%23email-roadblock-topographic-modal&flash=true&timeout=40000&s3_path=%2Fpath%2Fto%2Fimage%20with%20space&use_s3=true",
+            "https://api.urlbox.com/v1/API_KEY/5280bc0f0fa198eb6fcde9fd3f32280dec496ee3/png?url=https%3A%2F%2Fapp_staging.example.com%2Fmisc%2Ftemplate_preview.php%3Fdsfdsfsdf%26acc%3D79%26cb%3Dba86b4c1%26regions%3D%255B%257B%2522id%2522%253A%2522dsfds%2522%252C%2522data%2522%253A%257B%2522html%2522%253A%2522It%2520works!%2522%257D%252C%2522type%2522%253A%2522html%2522%257D%255D%26state%3Dpublished%26tid%3D7%26sig%3Da642316f7e0ac9d783c30ef30a89bed3204252000319a2789851bc3de65ea216&delay=5000&selector=%23trynow&full_page=true&width=1280&height=1024&cookie=ckplns%3D1&cookie=foo%3Dbar&user_agent=Mozilla%2F5.0%20(iPhone%3B%20CPU%20iPhone%20OS%2010_0%20like%20Mac%20OS%20X)%20AppleWebKit%2F602.1.32%20(KHTML%2C%20like%20Gecko)%20Version%2F10.0%20Mobile%2F14A5261v%20Safari%2F602.1&retina=true&thumb_width=400&crop_width=500&ttl=604800&force=true&headless=false&wait_for=.someel&click=%23tab-specs-trigger&hover=a%5Bhref%3D%22https%3A%2F%2Fgoogle.com%22%5D&bg_color=%23bbbddd&highlight=trump%7Cinauguration&highlightbg=%2311cc77&highlightfg=green&hide_selector=.modal-backdrop%2C%20%23email-roadblock-topographic-modal&flash=true&timeout=40000&s3_path=%2Fpath%2Fto%2Fimage%20with%20space&use_s3=true",
             $url
         );
     }
@@ -366,7 +366,7 @@ final class UrlboxTest extends TestCase
     {
         $urlbox = Urlbox::fromCredentials( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET', Mockery::mock( Client::class ) );
         $this->assertEquals(
-            'https://api.urlbox.io/v1/API_KEY/png?url=https%3A%2F%2Fexample.com',
+            'https://api.urlbox.com/v1/API_KEY/png?url=https%3A%2F%2Fexample.com',
             $urlbox->generateUnsignedUrl( [ 'url' => 'https://example.com' ] )
         );
     }
@@ -381,7 +381,7 @@ final class UrlboxTest extends TestCase
         ] );
 
         $this->assertEquals(
-            'https://api.urlbox.io/v1/API_KEY/png?url=https%3A%2F%2Fexample.com',
+            'https://api.urlbox.com/v1/API_KEY/png?url=https%3A%2F%2Fexample.com',
             $url
         );
     }
@@ -396,7 +396,7 @@ final class UrlboxTest extends TestCase
         ] );
 
         $this->assertEquals(
-            'https://api.urlbox.io/v1/API_KEY/jpg?url=https%3A%2F%2Fexample.com',
+            'https://api.urlbox.com/v1/API_KEY/jpg?url=https%3A%2F%2Fexample.com',
             $url
         );
     }
@@ -411,7 +411,7 @@ final class UrlboxTest extends TestCase
         ] );
 
         $this->assertEquals(
-            'https://api.urlbox.io/v1/API_KEY/jpeg?url=https%3A%2F%2Fexample.com',
+            'https://api.urlbox.com/v1/API_KEY/jpeg?url=https%3A%2F%2Fexample.com',
             $url
         );
     }
@@ -426,7 +426,7 @@ final class UrlboxTest extends TestCase
         ] );
 
         $this->assertEquals(
-            'https://api.urlbox.io/v1/API_KEY/avif?url=https%3A%2F%2Fexample.com',
+            'https://api.urlbox.com/v1/API_KEY/avif?url=https%3A%2F%2Fexample.com',
             $url
         );
     }
@@ -441,7 +441,7 @@ final class UrlboxTest extends TestCase
         ] );
 
         $this->assertEquals(
-            'https://api.urlbox.io/v1/API_KEY/webp?url=https%3A%2F%2Fexample.com',
+            'https://api.urlbox.com/v1/API_KEY/webp?url=https%3A%2F%2Fexample.com',
             $url
         );
     }
@@ -456,7 +456,7 @@ final class UrlboxTest extends TestCase
         ] );
 
         $this->assertEquals(
-            'https://api.urlbox.io/v1/API_KEY/pdf?url=https%3A%2F%2Fexample.com',
+            'https://api.urlbox.com/v1/API_KEY/pdf?url=https%3A%2F%2Fexample.com',
             $url
         );
     }
@@ -471,7 +471,7 @@ final class UrlboxTest extends TestCase
         ] );
 
         $this->assertEquals(
-            'https://api.urlbox.io/v1/API_KEY/svg?url=https%3A%2F%2Fexample.com',
+            'https://api.urlbox.com/v1/API_KEY/svg?url=https%3A%2F%2Fexample.com',
             $url
         );
     }
@@ -486,7 +486,7 @@ final class UrlboxTest extends TestCase
         ] );
 
         $this->assertEquals(
-            'https://api.urlbox.io/v1/API_KEY/html?url=https%3A%2F%2Fexample.com',
+            'https://api.urlbox.com/v1/API_KEY/html?url=https%3A%2F%2Fexample.com',
             $url
         );
     }
@@ -502,7 +502,7 @@ final class UrlboxTest extends TestCase
         ] );
 
         $this->assertEquals(
-            "https://api.urlbox.io/v1/API_KEY/png?url=https%3A%2F%2Fexample.com%2F~!%40%23%24%25%5E%26*()%7B%7D%5B%5D%3D%3A%2F%2C%3B%3F%2B'%22%5C&block_ads=true",
+            "https://api.urlbox.com/v1/API_KEY/png?url=https%3A%2F%2Fexample.com%2F~!%40%23%24%25%5E%26*()%7B%7D%5B%5D%3D%3A%2F%2C%3B%3F%2B'%22%5C&block_ads=true",
             $url
         );
     }
@@ -543,7 +543,7 @@ final class UrlboxTest extends TestCase
         $url = $urlbox->generateUnsignedUrl( $options );
 
         $this->assertEquals(
-            "https://api.urlbox.io/v1/API_KEY/png?url=https%3A%2F%2Fapp_staging.example.com%2Fmisc%2Ftemplate_preview.php%3Fdsfdsfsdf%26acc%3D79%26cb%3Dba86b4c1%26regions%3D%255B%257B%2522id%2522%253A%2522dsfds%2522%252C%2522data%2522%253A%257B%2522html%2522%253A%2522It%2520works!%2522%257D%252C%2522type%2522%253A%2522html%2522%257D%255D%26state%3Dpublished%26tid%3D7%26sig%3Da642316f7e0ac9d783c30ef30a89bed3204252000319a2789851bc3de65ea216&delay=5000&selector=%23trynow&full_page=true&width=1280&height=1024&cookie=ckplns%3D1&cookie=foo%3Dbar&user_agent=Mozilla%2F5.0%20(iPhone%3B%20CPU%20iPhone%20OS%2010_0%20like%20Mac%20OS%20X)%20AppleWebKit%2F602.1.32%20(KHTML%2C%20like%20Gecko)%20Version%2F10.0%20Mobile%2F14A5261v%20Safari%2F602.1&retina=true&thumb_width=400&crop_width=500&ttl=604800&force=true&headless=false&wait_for=.someel&click=%23tab-specs-trigger&hover=a%5Bhref%3D%22https%3A%2F%2Fgoogle.com%22%5D&bg_color=%23bbbddd&highlight=trump%7Cinauguration&highlightbg=%2311cc77&highlightfg=green&hide_selector=.modal-backdrop%2C%20%23email-roadblock-topographic-modal&flash=true&timeout=40000&s3_path=%2Fpath%2Fto%2Fimage%20with%20space&use_s3=true",
+            "https://api.urlbox.com/v1/API_KEY/png?url=https%3A%2F%2Fapp_staging.example.com%2Fmisc%2Ftemplate_preview.php%3Fdsfdsfsdf%26acc%3D79%26cb%3Dba86b4c1%26regions%3D%255B%257B%2522id%2522%253A%2522dsfds%2522%252C%2522data%2522%253A%257B%2522html%2522%253A%2522It%2520works!%2522%257D%252C%2522type%2522%253A%2522html%2522%257D%255D%26state%3Dpublished%26tid%3D7%26sig%3Da642316f7e0ac9d783c30ef30a89bed3204252000319a2789851bc3de65ea216&delay=5000&selector=%23trynow&full_page=true&width=1280&height=1024&cookie=ckplns%3D1&cookie=foo%3Dbar&user_agent=Mozilla%2F5.0%20(iPhone%3B%20CPU%20iPhone%20OS%2010_0%20like%20Mac%20OS%20X)%20AppleWebKit%2F602.1.32%20(KHTML%2C%20like%20Gecko)%20Version%2F10.0%20Mobile%2F14A5261v%20Safari%2F602.1&retina=true&thumb_width=400&crop_width=500&ttl=604800&force=true&headless=false&wait_for=.someel&click=%23tab-specs-trigger&hover=a%5Bhref%3D%22https%3A%2F%2Fgoogle.com%22%5D&bg_color=%23bbbddd&highlight=trump%7Cinauguration&highlightbg=%2311cc77&highlightfg=green&hide_selector=.modal-backdrop%2C%20%23email-roadblock-topographic-modal&flash=true&timeout=40000&s3_path=%2Fpath%2Fto%2Fimage%20with%20space&use_s3=true",
             $url
         );
     }
@@ -557,7 +557,7 @@ final class UrlboxTest extends TestCase
             $this->fail( 'Expected Exception not thrown' );
         } catch ( Exception $exception ) {
             $this->assertEquals(
-                'Unable to verify signature as Webhook Secret is not set. You can find your webhook secret inside your project\'s settings - https://www.urlbox.io/dashboard/projects',
+                'Unable to verify signature as Webhook Secret is not set. You can find your webhook secret inside your project\'s settings - https://www.urlbox.com/dashboard/projects',
                 $exception->getMessage()
             );
         }
@@ -580,8 +580,8 @@ final class UrlboxTest extends TestCase
 
     public function testVerifyWebhookSignatureReturnsTrueWhenSignatureMatches()
     {
-        $content = '{"event": "render.succeeded","renderId": "19a59ab6-a5aa-4cde-86cb-d2b23302fd84","result": {"renderUrl": "https://renders.urlbox.io/urlbox1/renders/6215a3df94d7588f7d910513/2022/7/6/19a59ab6-a5aa-4cde-86cb-d2b23302fd84.png","size": 34097},"meta": {"startTime": "2022-07-06T17:49:18.593Z","endTime": "2022-07-06T17:49:21.103Z"}}';
-        $header  = 't=1657129761,sha256=ddbceae3998704c0b264d8e8c1d486df9f1c0b6cdb77e6e13ce7de4a72fbd81d';
+        $content = '{"event": "render.succeeded","renderId": "19a59ab6-a5aa-4cde-86cb-d2b23302fd84","result": {"renderUrl": "https://renders.urlbox.com/urlbox1/renders/6215a3df94d7588f7d910513/2022/7/6/19a59ab6-a5aa-4cde-86cb-d2b23302fd84.png","size": 34097},"meta": {"startTime": "2022-07-06T17:49:18.593Z","endTime": "2022-07-06T17:49:21.103Z"}}';
+        $header  = 't=1657129761,sha256=294a474c8dea35399fdffb65ce0086c4a975bcdf788b57fdd25608d406b7abd9';
 
         $urlbox = new Urlbox( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET' );
 
@@ -590,7 +590,7 @@ final class UrlboxTest extends TestCase
 
     public function testVerifyWebhookSignatureReturnsFalseWhenSignatureDoNotMatch()
     {
-        $content = '{"event": "render.succeeded","renderId": "19a59ab6-a5aa-4cde-86cb-d2b23302fd84","result": {"renderUrl": "https://renders.urlbox.io/urlbox1/renders/6215a3df94d7588f7d910513/2022/7/6/19a59ab6-a5aa-4cde-86cb-d2b23302fd84.png","size": 34097},"meta": {"startTime": "2022-07-06T17:49:18.593Z","endTime": "2022-07-06T17:49:21.103Z"}}';
+        $content = '{"event": "render.succeeded","renderId": "19a59ab6-a5aa-4cde-86cb-d2b23302fd84","result": {"renderUrl": "https://renders.urlbox.com/urlbox1/renders/6215a3df94d7588f7d910513/2022/7/6/19a59ab6-a5aa-4cde-86cb-d2b23302fd84.png","size": 34097},"meta": {"startTime": "2022-07-06T17:49:18.593Z","endTime": "2022-07-06T17:49:21.103Z"}}';
         $header  = 't=1657129761,sha256=foobare3998704c0b264d8e8c1d4foobar1c0b6cdb77e6e13ce7de4a72foobar';
 
         $urlbox = new Urlbox( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET' );
@@ -600,7 +600,7 @@ final class UrlboxTest extends TestCase
 
     public function testVerifyWebhookSignatureReturnsFalseWhenWebhookSecretIncorrect()
     {
-        $content = '{"event": "render.succeeded","renderId": "19a59ab6-a5aa-4cde-86cb-d2b23302fd84","result": {"renderUrl": "https://renders.urlbox.io/urlbox1/renders/6215a3df94d7588f7d910513/2022/7/6/19a59ab6-a5aa-4cde-86cb-d2b23302fd84.png","size": 34097},"meta": {"startTime": "2022-07-06T17:49:18.593Z","endTime": "2022-07-06T17:49:21.103Z"}}';
+        $content = '{"event": "render.succeeded","renderId": "19a59ab6-a5aa-4cde-86cb-d2b23302fd84","result": {"renderUrl": "https://renders.urlbox.com/urlbox1/renders/6215a3df94d7588f7d910513/2022/7/6/19a59ab6-a5aa-4cde-86cb-d2b23302fd84.png","size": 34097},"meta": {"startTime": "2022-07-06T17:49:18.593Z","endTime": "2022-07-06T17:49:21.103Z"}}';
         $header  = 't=1657129761,sha256=ddbceae3998704c0b264d8e8c1d486df9f1c0b6cdb77e6e13ce7de4a72fbd81d';
 
         $urlbox = new Urlbox( 'API_KEY', 'API_SECRET', 'INCORRECT_WEBHOOK_SECRET' );

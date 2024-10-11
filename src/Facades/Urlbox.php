@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Facade;
  * Class Datatables.
  *
  * @package Urlbox\Screenshots\Facades
- * @author Chris Roebuck <chris@urlbox.io>
+ * @author Chris Roebuck <chris@urlbox.com>
  */
 class Urlbox extends Facade
 {
