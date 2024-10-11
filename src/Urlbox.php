@@ -36,6 +36,8 @@ class Urlbox
     }
 
     /**
+     * Ensure the user has passed an API key and secret.
+     *
      * @param string $apiKey
      * @param string $apiSecret
      *
@@ -55,6 +57,8 @@ class Urlbox
     }
 
     /**
+     * Returns a new instance of Urlbox
+     *
      * @param string $apiKey
      * @param string $apiSecret
      * @param string|null $webhookSecret
@@ -69,8 +73,9 @@ class Urlbox
     }
 
     /**
+     * Calls the Urlbox /sync endpoint
      * @param array $options
-     * @param string|null $saveToDiskPath
+     * @param string|null $saveToDiskPath - A path to save the image to
      *
      * @return array{renderUrl: string, size: int, localPath: string}
      * @throws GuzzleException
@@ -89,8 +94,9 @@ class Urlbox
     }
 
     /**
-     * @param string $endpoint
-     * @param array $options
+     * Make a POST request to Urlbox
+     * @param string $endpoint - The endpoint EG /sync
+     * @param array $options - The render options
      *
      * @return array{renderUrl: string, size: int}
      * @throws GuzzleException
