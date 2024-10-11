@@ -207,6 +207,7 @@ class Urlbox
     }
 
     /**
+     * Verifies the signature of an incoming webhook request to ensure its authenticity.
      * @param string $header
      * @param string $content
      *
