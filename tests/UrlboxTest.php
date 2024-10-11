@@ -581,7 +581,7 @@ final class UrlboxTest extends TestCase
     public function testVerifyWebhookSignatureReturnsTrueWhenSignatureMatches()
     {
         $content = '{"event": "render.succeeded","renderId": "19a59ab6-a5aa-4cde-86cb-d2b23302fd84","result": {"renderUrl": "https://renders.urlbox.com/urlbox1/renders/6215a3df94d7588f7d910513/2022/7/6/19a59ab6-a5aa-4cde-86cb-d2b23302fd84.png","size": 34097},"meta": {"startTime": "2022-07-06T17:49:18.593Z","endTime": "2022-07-06T17:49:21.103Z"}}';
-        $header  = 't=1657129761,sha256=ddbceae3998704c0b264d8e8c1d486df9f1c0b6cdb77e6e13ce7de4a72fbd81d';
+        $header  = 't=1657129761,sha256=294a474c8dea35399fdffb65ce0086c4a975bcdf788b57fdd25608d406b7abd9';
 
         $urlbox = new Urlbox( 'API_KEY', 'API_SECRET', 'WEBHOOK_SECRET' );
 
