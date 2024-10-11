@@ -51,7 +51,7 @@ You can find your API Credentials and Webhook Secret [here](https://www.urlbox.c
 
 ## Usage
 
-You will need a [Urlbox](https:// account to use this package. Please signup [here](https://urlbox.com/pricing) and get your API Key and Secret from the Urlbox dashboard once you have logged in.
+You will need a [Urlbox](https://urlbox.com) account to use this package. Please signup [here](https://urlbox.com/pricing) and get your API Key and Secret from the Urlbox dashboard once you have logged in.
 
 Here is a sample call to generate a Urlbox screenshot URL:
 
