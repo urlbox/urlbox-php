@@ -2,7 +2,7 @@
 
 ## Capture highly accurate webpage screenshots of any site using Urlbox.io in PHP
 
-This package uses the [Urlbox.io](https://urlbox.io) screenshot as a service to generate website screenshots.
+This package uses the [Urlbox](https://urlbox.com) screenshot as a service to generate website screenshots.
 
 ## Installation
 
@@ -47,11 +47,11 @@ URLBOX_SECRET=YOUR_URLBOX_SECRET
 URLBOX_WEBHOOK_SECRET=YOUR_URLBOX_WEBHOOK_SECRET
 ```
 
-You can find your API Credentials and Webhook Secret [here](https://www.urlbox.io/dashboard/projects)
+You can find your API Credentials and Webhook Secret [here](https://urlbox.com/dashboard/projects)
 
 ## Usage
 
-You will need a [Urlbox](https://urlbox.io) account to use this package. Please signup [here](https://urlbox.io/pricing) and get your API Key and Secret from the Urlbox dashboard once you have logged in.
+You will need a [Urlbox](https://urlbox.com) account to use this package. Please signup [here](https://urlbox.com/pricing) and get your API Key and Secret from the Urlbox dashboard once you have logged in.
 
 Here is a sample call to generate a Urlbox screenshot URL:
 
@@ -92,7 +92,7 @@ When you load the image, a screenshot of example.com will be returned.
 
 ## Options
 
-You can find the full list of available options within the [docs](https://urlbox.io/docs/options). Below is a list of the most commonly used options:
+You can find the full list of available options within the [docs](https://urlbox.com/docs/options). Below is a list of the most commonly used options:
 
 | Option          | Default           | Description                                                                                                                                                                                                                                                                                                                       |
 |-----------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -141,7 +141,7 @@ If you discover any security related issues, please email services@urlbox.io ins
 
 ## About Urlbox
 
-Urlbox is a premium Screenshot as a Service API. It lets you render highly accurate screenshots of webpages and display them anywhere you like. [Urlbox.io](https://urlbox.io).
+Urlbox is a premium Screenshot as a Service API. It lets you render highly accurate screenshots of webpages and display them anywhere you like. [Urlbox](https://urlbox.com).
 
 ## License
 
